@@ -1,0 +1,8 @@
+query Marks {
+  marks {
+    id
+    note
+    mood
+    createdAt
+  }
+}
