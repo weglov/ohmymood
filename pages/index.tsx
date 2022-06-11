@@ -17,7 +17,7 @@ const IndexPage = () => {
       <Box w="100%">
         <code>Status: {status}</code>
       </Box>
-      <code>{JSON.stringify(tg?.WebApp.initDataUnsafe)}</code>
+      <code>{JSON.stringify(tg?.WebApp)}</code>
     </Container>
   );
 };
