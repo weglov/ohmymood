@@ -1,19 +1,47 @@
 import { useInterval } from "@chakra-ui/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useQuery } from "react-query";
 import { TelegramWebApps } from "../../types/global";
-import { useTelegramInfo } from "./useTelegramInfo";
 
 export const useTelegramProvider = () => {
-  const [tgData, setTgData] = useState<TelegramWebApps.WebApp | null>(null);
-  console.log(tgData);
+  const [init, setInit] = useState(false);
+  const telegramData = useRef<TelegramWebApps.SDK | undefined>(undefined);
 
-  useInterval(() => {
-    if (window.Telegram?.WebApp) {
-      setTgData(window.Telegram.WebApp);
+  const { data, isLoading } = useQuery<{ status: string }>(
+    "init",
+    async () => {
+      const response = await fetch("/api/auth", {
+        method: "POST",
+        body: JSON.stringify({
+          initData: telegramData.current.WebApp.initData,
+          hash: telegramData.current.WebApp.initDataUnsafe.hash,
+        }),
+      });
+
+      const json = await response.json();
+
+      return json;
+    },
+    {
+      enabled: init,
     }
-  }, 1000);
+  );
+
+  console.log(data, isLoading);
+
+  useInterval(
+    function initTelegramSession() {
+      if (window.Telegram) {
+        telegramData.current = window.Telegram;
+        telegramData.current.WebApp.ready();
+        setInit(true);
+      }
+    },
+    !init ? 100 : null
+  );
 
   return {
-    data: tgData,
+    tg: telegramData.current,
+    status: data?.status,
   };
 };
