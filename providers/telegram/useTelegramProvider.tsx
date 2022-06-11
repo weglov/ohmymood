@@ -13,7 +13,7 @@ export const useTelegramProvider = () => {
       const response = await fetch("/api/auth", {
         method: "POST",
         body: JSON.stringify({
-          initData: telegramData.current.WebApp.initData,
+          initData: telegramData.current.WebApp.initDataUnsafe,
           hash: telegramData.current.WebApp.initDataUnsafe.hash,
         }),
       });
@@ -24,6 +24,7 @@ export const useTelegramProvider = () => {
     },
     {
       enabled: init,
+      retry: false,
     }
   );
 
