@@ -19,7 +19,8 @@ export default function handler(
   .digest();
   
   const hash = createHmac("sha256", secret_key).update(data_check_string).digest("hex")
- 
+  console.log(hash, request.body.initData)
+
   if (hash === request.body.initData.hash) {
     response.status(200).json({status: 'Authorized!'})
   }
