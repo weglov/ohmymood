@@ -14,13 +14,11 @@ export function createDataCheckStringFromUserData({hash, ...user_data}: any): st
   return key.join(`\n`)
 }
 
-const testData = {"query_id":"AAFSiAYAAAAAAFKIBgAVwf2H","user":{"id":428114,"first_name":"Viktor","last_name":"Shcheglov","username":"scheglov","language_code":"en"},"auth_date":"1654971177","hash":"665337db2506d9440fddf0f1535d9e8928c4fb306d9ff43d53cc8637480f3a91"}
-
-export default function handler(
+export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  const initData = transformInitData(request.body.initData || testData)
+  const initData = transformInitData(JSON.parse(request.body).initData)
 
   const data_check_string = createDataCheckStringFromUserData(initData)
   const secret_key = createHmac('sha256', "WebAppData")
@@ -28,10 +26,13 @@ export default function handler(
   .digest();
   
   const hash = createHmac("sha256", secret_key).update(data_check_string).digest("hex")
-  console.log(111, hash, initData.hash, data_check_string)
 
-  if (hash === initData.hash) {
-    response.status(200).json({status: 'Authorized!'})
+
+  if (hash === initData.hash && initData.user) {
+    const user = JSON.parse(initData.user)
+
+    response.status(200).json({status: 'Authorized', user})
+    return
   }
 
   

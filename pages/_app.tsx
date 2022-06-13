@@ -1,8 +1,8 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Script from "next/script";
-import { ChakraProvider } from "@chakra-ui/react";
 import { TelegramProvider } from "../providers";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider, UnifiedTheme, Button } from "@revolut/ui-kit";
 
 const client = new ApolloClient({
   uri: "https://api-eu-central-1.graphcms.com/v2/cl43xcw2r5y7z01xjbq7ffclx/master",
@@ -17,9 +17,9 @@ function MyApp({ Component, pageProps }) {
       <ApolloProvider client={client}>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <TelegramProvider>
-          <ChakraProvider>
+          <Provider theme={UnifiedTheme} mode="auto" highContrast="auto">
             <Component {...pageProps} />
-          </ChakraProvider>
+          </Provider>
         </TelegramProvider>
       </ApolloProvider>
     </QueryClientProvider>

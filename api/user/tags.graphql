@@ -1,0 +1,7 @@
+query Tags {
+  tags {
+    id
+    name
+    availableAt
+  }
+}

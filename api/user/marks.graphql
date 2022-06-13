@@ -1,8 +1,10 @@
-query Marks {
-  marks {
+query MyMarks($author: String) {
+  marks(orderBy: publishedAt_ASC, where: { author: $author }) {
     id
     note
     mood
+    author
     createdAt
+    updatedAt
   }
 }

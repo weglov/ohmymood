@@ -1,0 +1,5 @@
+query Author($id: ID) {
+  author(where: { id: $id }) {
+    id
+  }
+}

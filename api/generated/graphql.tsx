@@ -765,7 +765,6 @@ export type AuthorConnection = {
 };
 
 export type AuthorCreateInput = {
-  cl44i2zxz1a1i01z31p8n2o7j?: InputMaybe<MarkCreateManyInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
@@ -887,7 +886,8 @@ export enum AuthorOrderByInput {
 }
 
 export type AuthorUpdateInput = {
-  cl44i2zxz1a1i01z31p8n2o7j?: InputMaybe<MarkUpdateManyInlineInput>;
+  /** No fields in update input */
+  _?: InputMaybe<Scalars['String']>;
 };
 
 export type AuthorUpdateManyInlineInput = {
@@ -1192,7 +1192,7 @@ export type LocationInput = {
 /** mood marks */
 export type Mark = Node & {
   __typename?: 'Mark';
-  author?: Maybe<Author>;
+  author: Scalars['String'];
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
   /** User that created this document */
@@ -1213,16 +1213,11 @@ export type Mark = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
+  tags: Array<MarkTags>;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
-};
-
-
-/** mood marks */
-export type MarkAuthorArgs = {
-  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -1273,6 +1268,17 @@ export type MarkScheduledInArgs = {
 
 
 /** mood marks */
+export type MarkTagsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** mood marks */
 export type MarkUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
@@ -1295,11 +1301,12 @@ export type MarkConnection = {
 };
 
 export type MarkCreateInput = {
-  author?: InputMaybe<AuthorCreateOneInlineInput>;
+  author: Scalars['String'];
   createdAt?: InputMaybe<Scalars['DateTime']>;
   mood: Mood;
   note?: InputMaybe<Scalars['String']>;
   photo?: InputMaybe<AssetCreateOneInlineInput>;
+  tags?: InputMaybe<MarkTagsCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1336,7 +1343,25 @@ export type MarkManyWhereInput = {
   OR?: InputMaybe<Array<MarkWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
-  author?: InputMaybe<AuthorWhereInput>;
+  author?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  author_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  author_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  author_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  author_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  author_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  author_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  author_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  author_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  author_starts_with?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -1437,6 +1462,8 @@ export type MarkManyWhereInput = {
 };
 
 export enum MarkOrderByInput {
+  AuthorAsc = 'author_ASC',
+  AuthorDesc = 'author_DESC',
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
   IdAsc = 'id_ASC',
@@ -1451,11 +1478,92 @@ export enum MarkOrderByInput {
   UpdatedAtDesc = 'updatedAt_DESC'
 }
 
+export type MarkTags = Tag;
+
+export type MarkTagsConnectInput = {
+  Tag?: InputMaybe<TagConnectInput>;
+};
+
+export type MarkTagsCreateInput = {
+  Tag?: InputMaybe<TagCreateInput>;
+};
+
+export type MarkTagsCreateManyInlineInput = {
+  /** Connect multiple existing MarkTags documents */
+  connect?: InputMaybe<Array<MarkTagsWhereUniqueInput>>;
+  /** Create and connect multiple existing MarkTags documents */
+  create?: InputMaybe<Array<MarkTagsCreateInput>>;
+};
+
+export type MarkTagsCreateOneInlineInput = {
+  /** Connect one existing MarkTags document */
+  connect?: InputMaybe<MarkTagsWhereUniqueInput>;
+  /** Create and connect one MarkTags document */
+  create?: InputMaybe<MarkTagsCreateInput>;
+};
+
+export type MarkTagsUpdateInput = {
+  Tag?: InputMaybe<TagUpdateInput>;
+};
+
+export type MarkTagsUpdateManyInlineInput = {
+  /** Connect multiple existing MarkTags documents */
+  connect?: InputMaybe<Array<MarkTagsConnectInput>>;
+  /** Create and connect multiple MarkTags documents */
+  create?: InputMaybe<Array<MarkTagsCreateInput>>;
+  /** Delete multiple MarkTags documents */
+  delete?: InputMaybe<Array<MarkTagsWhereUniqueInput>>;
+  /** Disconnect multiple MarkTags documents */
+  disconnect?: InputMaybe<Array<MarkTagsWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing MarkTags documents */
+  set?: InputMaybe<Array<MarkTagsWhereUniqueInput>>;
+  /** Update multiple MarkTags documents */
+  update?: InputMaybe<Array<MarkTagsUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple MarkTags documents */
+  upsert?: InputMaybe<Array<MarkTagsUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type MarkTagsUpdateManyWithNestedWhereInput = {
+  Tag?: InputMaybe<TagUpdateManyWithNestedWhereInput>;
+};
+
+export type MarkTagsUpdateOneInlineInput = {
+  /** Connect existing MarkTags document */
+  connect?: InputMaybe<MarkTagsWhereUniqueInput>;
+  /** Create and connect one MarkTags document */
+  create?: InputMaybe<MarkTagsCreateInput>;
+  /** Delete currently connected MarkTags document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected MarkTags document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single MarkTags document */
+  update?: InputMaybe<MarkTagsUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single MarkTags document */
+  upsert?: InputMaybe<MarkTagsUpsertWithNestedWhereUniqueInput>;
+};
+
+export type MarkTagsUpdateWithNestedWhereUniqueInput = {
+  Tag?: InputMaybe<TagUpdateWithNestedWhereUniqueInput>;
+};
+
+export type MarkTagsUpsertWithNestedWhereUniqueInput = {
+  Tag?: InputMaybe<TagUpsertWithNestedWhereUniqueInput>;
+};
+
+export type MarkTagsWhereInput = {
+  Tag?: InputMaybe<TagWhereInput>;
+};
+
+export type MarkTagsWhereUniqueInput = {
+  Tag?: InputMaybe<TagWhereUniqueInput>;
+};
+
 export type MarkUpdateInput = {
-  author?: InputMaybe<AuthorUpdateOneInlineInput>;
+  author?: InputMaybe<Scalars['String']>;
   mood?: InputMaybe<Mood>;
   note?: InputMaybe<Scalars['String']>;
   photo?: InputMaybe<AssetUpdateOneInlineInput>;
+  tags?: InputMaybe<MarkTagsUpdateManyInlineInput>;
 };
 
 export type MarkUpdateManyInlineInput = {
@@ -1476,6 +1584,7 @@ export type MarkUpdateManyInlineInput = {
 };
 
 export type MarkUpdateManyInput = {
+  author?: InputMaybe<Scalars['String']>;
   mood?: InputMaybe<Mood>;
   note?: InputMaybe<Scalars['String']>;
 };
@@ -1533,7 +1642,25 @@ export type MarkWhereInput = {
   OR?: InputMaybe<Array<MarkWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
-  author?: InputMaybe<AuthorWhereInput>;
+  author?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  author_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  author_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  author_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  author_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  author_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  author_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  author_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  author_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  author_starts_with?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -1639,11 +1766,11 @@ export type MarkWhereUniqueInput = {
 };
 
 export enum Mood {
-  Angry = 'Angry',
+  Bad = 'Bad',
+  Good = 'Good',
   Great = 'Great',
-  Neutral = 'Neutral',
-  Sad = 'Sad',
-  Wow = 'Wow'
+  Ok = 'OK',
+  Terrible = 'Terrible'
 }
 
 export type Mutation = {
@@ -1659,6 +1786,8 @@ export type Mutation = {
   createMark?: Maybe<Mark>;
   /** Create one scheduledRelease */
   createScheduledRelease?: Maybe<ScheduledRelease>;
+  /** Create one tag */
+  createTag?: Maybe<Tag>;
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>;
   /** Delete one author from _all_ existing stages. Returns deleted document. */
@@ -1684,12 +1813,21 @@ export type Mutation = {
   deleteManyMarks: BatchPayload;
   /** Delete many Mark documents, return deleted documents */
   deleteManyMarksConnection: MarkConnection;
+  /**
+   * Delete many Tag documents
+   * @deprecated Please use the new paginated many mutation (deleteManyTagsConnection)
+   */
+  deleteManyTags: BatchPayload;
+  /** Delete many Tag documents, return deleted documents */
+  deleteManyTagsConnection: TagConnection;
   /** Delete one mark from _all_ existing stages. Returns deleted document. */
   deleteMark?: Maybe<Mark>;
   /** Delete and return scheduled operation */
   deleteScheduledOperation?: Maybe<ScheduledOperation>;
   /** Delete one scheduledRelease from _all_ existing stages. Returns deleted document. */
   deleteScheduledRelease?: Maybe<ScheduledRelease>;
+  /** Delete one tag from _all_ existing stages. Returns deleted document. */
+  deleteTag?: Maybe<Tag>;
   /** Publish one asset */
   publishAsset?: Maybe<Asset>;
   /** Publish one author */
@@ -1715,20 +1853,33 @@ export type Mutation = {
   publishManyMarks: BatchPayload;
   /** Publish many Mark documents */
   publishManyMarksConnection: MarkConnection;
+  /**
+   * Publish many Tag documents
+   * @deprecated Please use the new paginated many mutation (publishManyTagsConnection)
+   */
+  publishManyTags: BatchPayload;
+  /** Publish many Tag documents */
+  publishManyTagsConnection: TagConnection;
   /** Publish one mark */
   publishMark?: Maybe<Mark>;
+  /** Publish one tag */
+  publishTag?: Maybe<Tag>;
   /** Schedule to publish one asset */
   schedulePublishAsset?: Maybe<Asset>;
   /** Schedule to publish one author */
   schedulePublishAuthor?: Maybe<Author>;
   /** Schedule to publish one mark */
   schedulePublishMark?: Maybe<Mark>;
+  /** Schedule to publish one tag */
+  schedulePublishTag?: Maybe<Tag>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAsset?: Maybe<Asset>;
   /** Unpublish one author from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAuthor?: Maybe<Author>;
   /** Unpublish one mark from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishMark?: Maybe<Mark>;
+  /** Unpublish one tag from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishTag?: Maybe<Tag>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>;
   /** Unpublish one author from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -1754,8 +1905,17 @@ export type Mutation = {
   unpublishManyMarks: BatchPayload;
   /** Find many Mark documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyMarksConnection: MarkConnection;
+  /**
+   * Unpublish many Tag documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyTagsConnection)
+   */
+  unpublishManyTags: BatchPayload;
+  /** Find many Tag documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyTagsConnection: TagConnection;
   /** Unpublish one mark from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishMark?: Maybe<Mark>;
+  /** Unpublish one tag from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishTag?: Maybe<Tag>;
   /** Update one asset */
   updateAsset?: Maybe<Asset>;
   /** Update one author */
@@ -1781,16 +1941,27 @@ export type Mutation = {
   updateManyMarks: BatchPayload;
   /** Update many Mark documents */
   updateManyMarksConnection: MarkConnection;
+  /**
+   * Update many tags
+   * @deprecated Please use the new paginated many mutation (updateManyTagsConnection)
+   */
+  updateManyTags: BatchPayload;
+  /** Update many Tag documents */
+  updateManyTagsConnection: TagConnection;
   /** Update one mark */
   updateMark?: Maybe<Mark>;
   /** Update one scheduledRelease */
   updateScheduledRelease?: Maybe<ScheduledRelease>;
+  /** Update one tag */
+  updateTag?: Maybe<Tag>;
   /** Upsert one asset */
   upsertAsset?: Maybe<Asset>;
   /** Upsert one author */
   upsertAuthor?: Maybe<Author>;
   /** Upsert one mark */
   upsertMark?: Maybe<Mark>;
+  /** Upsert one tag */
+  upsertTag?: Maybe<Tag>;
 };
 
 
@@ -1811,6 +1982,11 @@ export type MutationCreateMarkArgs = {
 
 export type MutationCreateScheduledReleaseArgs = {
   data: ScheduledReleaseCreateInput;
+};
+
+
+export type MutationCreateTagArgs = {
+  data: TagCreateInput;
 };
 
 
@@ -1869,6 +2045,21 @@ export type MutationDeleteManyMarksConnectionArgs = {
 };
 
 
+export type MutationDeleteManyTagsArgs = {
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
+export type MutationDeleteManyTagsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
 export type MutationDeleteMarkArgs = {
   where: MarkWhereUniqueInput;
 };
@@ -1881,6 +2072,11 @@ export type MutationDeleteScheduledOperationArgs = {
 
 export type MutationDeleteScheduledReleaseArgs = {
   where: ScheduledReleaseWhereUniqueInput;
+};
+
+
+export type MutationDeleteTagArgs = {
+  where: TagWhereUniqueInput;
 };
 
 
@@ -1959,9 +2155,33 @@ export type MutationPublishManyMarksConnectionArgs = {
 };
 
 
+export type MutationPublishManyTagsArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
+export type MutationPublishManyTagsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
 export type MutationPublishMarkArgs = {
   to?: Array<Stage>;
   where: MarkWhereUniqueInput;
+};
+
+
+export type MutationPublishTagArgs = {
+  to?: Array<Stage>;
+  where: TagWhereUniqueInput;
 };
 
 
@@ -1992,6 +2212,14 @@ export type MutationSchedulePublishMarkArgs = {
 };
 
 
+export type MutationSchedulePublishTagArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  to?: Array<Stage>;
+  where: TagWhereUniqueInput;
+};
+
+
 export type MutationScheduleUnpublishAssetArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -2015,6 +2243,14 @@ export type MutationScheduleUnpublishMarkArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']>;
   releaseId?: InputMaybe<Scalars['String']>;
   where: MarkWhereUniqueInput;
+};
+
+
+export type MutationScheduleUnpublishTagArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  where: TagWhereUniqueInput;
 };
 
 
@@ -2090,9 +2326,33 @@ export type MutationUnpublishManyMarksConnectionArgs = {
 };
 
 
+export type MutationUnpublishManyTagsArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyTagsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
 export type MutationUnpublishMarkArgs = {
   from?: Array<Stage>;
   where: MarkWhereUniqueInput;
+};
+
+
+export type MutationUnpublishTagArgs = {
+  from?: Array<Stage>;
+  where: TagWhereUniqueInput;
 };
 
 
@@ -2159,6 +2419,23 @@ export type MutationUpdateManyMarksConnectionArgs = {
 };
 
 
+export type MutationUpdateManyTagsArgs = {
+  data: TagUpdateManyInput;
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
+export type MutationUpdateManyTagsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  data: TagUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TagManyWhereInput>;
+};
+
+
 export type MutationUpdateMarkArgs = {
   data: MarkUpdateInput;
   where: MarkWhereUniqueInput;
@@ -2168,6 +2445,12 @@ export type MutationUpdateMarkArgs = {
 export type MutationUpdateScheduledReleaseArgs = {
   data: ScheduledReleaseUpdateInput;
   where: ScheduledReleaseWhereUniqueInput;
+};
+
+
+export type MutationUpdateTagArgs = {
+  data: TagUpdateInput;
+  where: TagWhereUniqueInput;
 };
 
 
@@ -2186,6 +2469,12 @@ export type MutationUpsertAuthorArgs = {
 export type MutationUpsertMarkArgs = {
   upsert: MarkUpsertInput;
   where: MarkWhereUniqueInput;
+};
+
+
+export type MutationUpsertTagArgs = {
+  upsert: TagUpsertInput;
+  where: TagWhereUniqueInput;
 };
 
 /** An object with an ID */
@@ -2258,6 +2547,14 @@ export type Query = {
   scheduledReleases: Array<ScheduledRelease>;
   /** Retrieve multiple scheduledReleases using the Relay connection interface */
   scheduledReleasesConnection: ScheduledReleaseConnection;
+  /** Retrieve a single tag */
+  tag?: Maybe<Tag>;
+  /** Retrieve document version */
+  tagVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple tags */
+  tags: Array<Tag>;
+  /** Retrieve multiple tags using the Relay connection interface */
+  tagsConnection: TagConnection;
   /** Retrieve a single user */
   user?: Maybe<User>;
   /** Retrieve multiple users */
@@ -2454,6 +2751,44 @@ export type QueryScheduledReleasesConnectionArgs = {
 };
 
 
+export type QueryTagArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: TagWhereUniqueInput;
+};
+
+
+export type QueryTagVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryTagsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<TagOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<TagWhereInput>;
+};
+
+
+export type QueryTagsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<TagOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<TagWhereInput>;
+};
+
+
 export type QueryUserArgs = {
   locales?: Array<Locale>;
   stage?: Stage;
@@ -2593,7 +2928,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | Author | Mark;
+export type ScheduledOperationAffectedDocument = Asset | Author | Mark | Tag;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -3518,6 +3853,442 @@ export enum SystemDateTimeFieldVariation {
   Localization = 'LOCALIZATION'
 }
 
+export type Tag = Node & {
+  __typename?: 'Tag';
+  availableAt: Array<Mood>;
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<Tag>;
+  /** List of Tag versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  mark?: Maybe<Mark>;
+  name?: Maybe<Scalars['String']>;
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+export type TagCreatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type TagDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+  stages?: Array<Stage>;
+};
+
+
+export type TagHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type TagMarkArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type TagPublishedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type TagScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+export type TagUpdatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type TagConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: TagWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type TagConnection = {
+  __typename?: 'TagConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<TagEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type TagCreateInput = {
+  availableAt?: InputMaybe<Array<Mood>>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  mark?: InputMaybe<MarkCreateOneInlineInput>;
+  name?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type TagCreateManyInlineInput = {
+  /** Connect multiple existing Tag documents */
+  connect?: InputMaybe<Array<TagWhereUniqueInput>>;
+  /** Create and connect multiple existing Tag documents */
+  create?: InputMaybe<Array<TagCreateInput>>;
+};
+
+export type TagCreateOneInlineInput = {
+  /** Connect one existing Tag document */
+  connect?: InputMaybe<TagWhereUniqueInput>;
+  /** Create and connect one Tag document */
+  create?: InputMaybe<TagCreateInput>;
+};
+
+/** An edge in a connection. */
+export type TagEdge = {
+  __typename?: 'TagEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: Tag;
+};
+
+/** Identifies documents */
+export type TagManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<TagWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<TagWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<TagWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  availableAt?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  availableAt_contains_all?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  availableAt_contains_none?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  availableAt_contains_some?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  availableAt_not?: InputMaybe<Array<Mood>>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  mark?: InputMaybe<MarkWhereInput>;
+  name?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  name_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  name_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  name_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  name_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  name_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  name_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  name_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  name_starts_with?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export enum TagOrderByInput {
+  AvailableAtAsc = 'availableAt_ASC',
+  AvailableAtDesc = 'availableAt_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC'
+}
+
+export type TagUpdateInput = {
+  availableAt?: InputMaybe<Array<Mood>>;
+  mark?: InputMaybe<MarkUpdateOneInlineInput>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type TagUpdateManyInlineInput = {
+  /** Connect multiple existing Tag documents */
+  connect?: InputMaybe<Array<TagConnectInput>>;
+  /** Create and connect multiple Tag documents */
+  create?: InputMaybe<Array<TagCreateInput>>;
+  /** Delete multiple Tag documents */
+  delete?: InputMaybe<Array<TagWhereUniqueInput>>;
+  /** Disconnect multiple Tag documents */
+  disconnect?: InputMaybe<Array<TagWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing Tag documents */
+  set?: InputMaybe<Array<TagWhereUniqueInput>>;
+  /** Update multiple Tag documents */
+  update?: InputMaybe<Array<TagUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple Tag documents */
+  upsert?: InputMaybe<Array<TagUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type TagUpdateManyInput = {
+  availableAt?: InputMaybe<Array<Mood>>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type TagUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: TagUpdateManyInput;
+  /** Document search */
+  where: TagWhereInput;
+};
+
+export type TagUpdateOneInlineInput = {
+  /** Connect existing Tag document */
+  connect?: InputMaybe<TagWhereUniqueInput>;
+  /** Create and connect one Tag document */
+  create?: InputMaybe<TagCreateInput>;
+  /** Delete currently connected Tag document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected Tag document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single Tag document */
+  update?: InputMaybe<TagUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single Tag document */
+  upsert?: InputMaybe<TagUpsertWithNestedWhereUniqueInput>;
+};
+
+export type TagUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: TagUpdateInput;
+  /** Unique document search */
+  where: TagWhereUniqueInput;
+};
+
+export type TagUpsertInput = {
+  /** Create document if it didn't exist */
+  create: TagCreateInput;
+  /** Update document if it exists */
+  update: TagUpdateInput;
+};
+
+export type TagUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: TagUpsertInput;
+  /** Unique document search */
+  where: TagWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type TagWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<TagWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<TagWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<TagWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  availableAt?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  availableAt_contains_all?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  availableAt_contains_none?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  availableAt_contains_some?: InputMaybe<Array<Mood>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  availableAt_not?: InputMaybe<Array<Mood>>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  mark?: InputMaybe<MarkWhereInput>;
+  name?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  name_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  name_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  name_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  name_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  name_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  name_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  name_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  name_starts_with?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** References Tag record uniquely */
+export type TagWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type UnpublishLocaleInput = {
   /** Locales to unpublish */
   locale: Locale;
@@ -3983,46 +4754,220 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
-export type MarksQueryVariables = Exact<{ [key: string]: never; }>;
+export type AuthorQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
 
 
-export type MarksQuery = { __typename?: 'Query', marks: Array<{ __typename?: 'Mark', id: string, note?: string | null, mood: Mood, createdAt: any }> };
+export type AuthorQuery = { __typename?: 'Query', author?: { __typename?: 'Author', id: string } | null };
+
+export type CreateMarkMutationVariables = Exact<{
+  mood: Mood;
+  note: Scalars['String'];
+  author: Scalars['String'];
+}>;
 
 
-export const MarksDocument = gql`
-    query Marks {
-  marks {
+export type CreateMarkMutation = { __typename?: 'Mutation', createMark?: { __typename?: 'Mark', id: string, mood: Mood, note?: string | null } | null };
+
+export type MyMarksQueryVariables = Exact<{
+  author?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type MyMarksQuery = { __typename?: 'Query', marks: Array<{ __typename?: 'Mark', id: string, note?: string | null, mood: Mood, author: string, createdAt: any, updatedAt: any }> };
+
+export type PublishMarkMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PublishMarkMutation = { __typename?: 'Mutation', publishMark?: { __typename?: 'Mark', id: string } | null };
+
+export type TagsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TagsQuery = { __typename?: 'Query', tags: Array<{ __typename?: 'Tag', id: string, name?: string | null, availableAt: Array<Mood> }> };
+
+
+export const AuthorDocument = gql`
+    query Author($id: ID) {
+  author(where: {id: $id}) {
     id
-    note
-    mood
-    createdAt
   }
 }
     `;
 
 /**
- * __useMarksQuery__
+ * __useAuthorQuery__
  *
- * To run a query within a React component, call `useMarksQuery` and pass it any options that fit your needs.
- * When your component renders, `useMarksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAuthorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAuthorQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMarksQuery({
+ * const { data, loading, error } = useAuthorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAuthorQuery(baseOptions?: Apollo.QueryHookOptions<AuthorQuery, AuthorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AuthorQuery, AuthorQueryVariables>(AuthorDocument, options);
+      }
+export function useAuthorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AuthorQuery, AuthorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AuthorQuery, AuthorQueryVariables>(AuthorDocument, options);
+        }
+export type AuthorQueryHookResult = ReturnType<typeof useAuthorQuery>;
+export type AuthorLazyQueryHookResult = ReturnType<typeof useAuthorLazyQuery>;
+export type AuthorQueryResult = Apollo.QueryResult<AuthorQuery, AuthorQueryVariables>;
+export const CreateMarkDocument = gql`
+    mutation createMark($mood: Mood!, $note: String!, $author: String!) {
+  createMark(data: {mood: $mood, note: $note, author: $author}) {
+    id
+    mood
+    note
+  }
+}
+    `;
+export type CreateMarkMutationFn = Apollo.MutationFunction<CreateMarkMutation, CreateMarkMutationVariables>;
+
+/**
+ * __useCreateMarkMutation__
+ *
+ * To run a mutation, you first call `useCreateMarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMarkMutation, { data, loading, error }] = useCreateMarkMutation({
+ *   variables: {
+ *      mood: // value for 'mood'
+ *      note: // value for 'note'
+ *      author: // value for 'author'
+ *   },
+ * });
+ */
+export function useCreateMarkMutation(baseOptions?: Apollo.MutationHookOptions<CreateMarkMutation, CreateMarkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMarkMutation, CreateMarkMutationVariables>(CreateMarkDocument, options);
+      }
+export type CreateMarkMutationHookResult = ReturnType<typeof useCreateMarkMutation>;
+export type CreateMarkMutationResult = Apollo.MutationResult<CreateMarkMutation>;
+export type CreateMarkMutationOptions = Apollo.BaseMutationOptions<CreateMarkMutation, CreateMarkMutationVariables>;
+export const MyMarksDocument = gql`
+    query MyMarks($author: String) {
+  marks(orderBy: publishedAt_ASC, where: {author: $author}) {
+    id
+    note
+    mood
+    author
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useMyMarksQuery__
+ *
+ * To run a query within a React component, call `useMyMarksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyMarksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyMarksQuery({
+ *   variables: {
+ *      author: // value for 'author'
+ *   },
+ * });
+ */
+export function useMyMarksQuery(baseOptions?: Apollo.QueryHookOptions<MyMarksQuery, MyMarksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyMarksQuery, MyMarksQueryVariables>(MyMarksDocument, options);
+      }
+export function useMyMarksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyMarksQuery, MyMarksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyMarksQuery, MyMarksQueryVariables>(MyMarksDocument, options);
+        }
+export type MyMarksQueryHookResult = ReturnType<typeof useMyMarksQuery>;
+export type MyMarksLazyQueryHookResult = ReturnType<typeof useMyMarksLazyQuery>;
+export type MyMarksQueryResult = Apollo.QueryResult<MyMarksQuery, MyMarksQueryVariables>;
+export const PublishMarkDocument = gql`
+    mutation publishMark($id: ID!) {
+  publishMark(to: PUBLISHED, where: {id: $id}) {
+    id
+  }
+}
+    `;
+export type PublishMarkMutationFn = Apollo.MutationFunction<PublishMarkMutation, PublishMarkMutationVariables>;
+
+/**
+ * __usePublishMarkMutation__
+ *
+ * To run a mutation, you first call `usePublishMarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePublishMarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [publishMarkMutation, { data, loading, error }] = usePublishMarkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePublishMarkMutation(baseOptions?: Apollo.MutationHookOptions<PublishMarkMutation, PublishMarkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PublishMarkMutation, PublishMarkMutationVariables>(PublishMarkDocument, options);
+      }
+export type PublishMarkMutationHookResult = ReturnType<typeof usePublishMarkMutation>;
+export type PublishMarkMutationResult = Apollo.MutationResult<PublishMarkMutation>;
+export type PublishMarkMutationOptions = Apollo.BaseMutationOptions<PublishMarkMutation, PublishMarkMutationVariables>;
+export const TagsDocument = gql`
+    query Tags {
+  tags {
+    id
+    name
+    availableAt
+  }
+}
+    `;
+
+/**
+ * __useTagsQuery__
+ *
+ * To run a query within a React component, call `useTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTagsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useMarksQuery(baseOptions?: Apollo.QueryHookOptions<MarksQuery, MarksQueryVariables>) {
+export function useTagsQuery(baseOptions?: Apollo.QueryHookOptions<TagsQuery, TagsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MarksQuery, MarksQueryVariables>(MarksDocument, options);
+        return Apollo.useQuery<TagsQuery, TagsQueryVariables>(TagsDocument, options);
       }
-export function useMarksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MarksQuery, MarksQueryVariables>) {
+export function useTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TagsQuery, TagsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MarksQuery, MarksQueryVariables>(MarksDocument, options);
+          return Apollo.useLazyQuery<TagsQuery, TagsQueryVariables>(TagsDocument, options);
         }
-export type MarksQueryHookResult = ReturnType<typeof useMarksQuery>;
-export type MarksLazyQueryHookResult = ReturnType<typeof useMarksLazyQuery>;
-export type MarksQueryResult = Apollo.QueryResult<MarksQuery, MarksQueryVariables>;
+export type TagsQueryHookResult = ReturnType<typeof useTagsQuery>;
+export type TagsLazyQueryHookResult = ReturnType<typeof useTagsLazyQuery>;
+export type TagsQueryResult = Apollo.QueryResult<TagsQuery, TagsQueryVariables>;

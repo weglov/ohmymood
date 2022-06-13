@@ -1,39 +1,50 @@
-import { useInterval } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { TelegramWebApps } from "../../types/global";
+import { useInterval } from "../../hooks/useInterval";
+import { tgFake } from "./__fake";
+
+const isDev = process.env.NODE_ENV === "development";
 
 export const useTelegramProvider = () => {
   const [init, setInit] = useState(false);
-  const telegramData = useRef<TelegramWebApps.SDK | undefined>(undefined);
+  const [user, setUser] = useState<TelegramWebApps.WebAppUser | undefined>(
+    undefined
+  );
+  const [telegramData, setTelegramData] = useState<
+    TelegramWebApps.SDK | undefined
+  >(undefined);
 
-  const { data, isLoading } = useQuery<{ status: string }>(
+  const { data, isFetched } = useQuery<{
+    status: "Authorized" | "Unauthorized";
+    user: TelegramWebApps.WebAppUser;
+  }>(
     "init",
     async () => {
       const response = await fetch("/api/auth", {
         method: "POST",
         body: JSON.stringify({
-          initData: telegramData.current.WebApp.initData,
+          initData: telegramData?.WebApp.initData,
         }),
       });
 
       const json = await response.json();
-
       return json;
     },
     {
       enabled: init,
       retry: false,
+      onSuccess: ({ user }) => {
+        setUser(user);
+      },
     }
   );
-
-  console.log(data, isLoading);
 
   useInterval(
     function initTelegramSession() {
       if (window.Telegram) {
-        telegramData.current = window.Telegram;
-        telegramData.current.WebApp.ready();
+        setTelegramData(isDev ? tgFake : window.Telegram);
+        window.Telegram.WebApp.ready();
         setInit(true);
       }
     },
@@ -41,7 +52,9 @@ export const useTelegramProvider = () => {
   );
 
   return {
-    tg: telegramData.current,
+    isInitialized: isFetched && init,
+    tg: telegramData,
+    user,
     status: data?.status,
   };
 };
