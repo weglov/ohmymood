@@ -11,3 +11,7 @@ export function createDataCheckStringFromUserData({hash, ...user_data}: any): st
 
   return key.join(`\n`)
 }
+
+export const sendTelegramPing = async ({chat_id, text}:{chat_id: string, text: string}) => {
+  await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${chat_id}&text=${text}`)
+}

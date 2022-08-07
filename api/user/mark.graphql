@@ -1,7 +1,0 @@
-mutation createMark($mood: Mood!, $note: String!, $author: String!) {
-  createMark(data: { mood: $mood, note: $note, author: $author }) {
-    id
-    mood
-    note
-  }
-}

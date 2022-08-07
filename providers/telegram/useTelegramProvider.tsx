@@ -1,41 +1,32 @@
+import axios, { Axios, AxiosResponse } from "axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { TelegramWebApps } from "../../types/global";
 import { useInterval } from "../../hooks/useInterval";
+import { client } from "../../lib/api";
 import { tgFake } from "./__fake";
 
 const isDev = process.env.NODE_ENV === "development";
 
 export const useTelegramProvider = () => {
   const [init, setInit] = useState(false);
-  const [user, setUser] = useState<TelegramWebApps.WebAppUser | undefined>(
+  const [user, setUser] = useState<WebAppUser | undefined>(undefined);
+  const [telegramData, setTelegramData] = useState<Telegram | undefined>(
     undefined
   );
-  const [telegramData, setTelegramData] = useState<
-    TelegramWebApps.SDK | undefined
-  >(undefined);
 
-  const { data, isFetched } = useQuery<{
+  const { data, isFetched } = useQuery<AxiosResponse<{
     status: "Authorized" | "Unauthorized";
-    user: TelegramWebApps.WebAppUser;
-  }>(
+    user: WebAppUser;
+    token: string
+  }>>(
     "init",
-    async () => {
-      const response = await fetch("/api/auth", {
-        method: "POST",
-        body: JSON.stringify({
-          initData: telegramData?.WebApp.initData,
-        }),
-      });
-
-      const json = await response.json();
-      return json;
-    },
+    () => client.post("/api/auth", { initData: telegramData?.WebApp.initData }),
     {
       enabled: init,
       retry: false,
-      onSuccess: ({ user }) => {
+      onSuccess: ({data: {user, token}}) => {
         setUser(user);
+        client.defaults.headers.common['x-token'] = token;
       },
     }
   );

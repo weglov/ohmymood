@@ -4,18 +4,20 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc",
-    "ggl:codegen": "graphql-codegen --config codegen.yml"
+    "type-check": "tsc"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
-    "@graphql-codegen/cli": "^2.6.2",
     "@revolut/ui-kit": "^12.5.0",
+    "@types/telegram-web-app": "^1.0.0",
     "awesome-graphql-client": "^0.12.1",
+    "axios": "^0.27.2",
     "framer-motion": "^6",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "latest",
+    "next-pwa": "^5.5.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-query": "^3.39.1",
@@ -23,11 +25,6 @@
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "2.6.2",
-    "@graphql-codegen/introspection": "2.1.1",
-    "@graphql-codegen/typescript": "2.5.0",
-    "@graphql-codegen/typescript-operations": "2.4.1",
-    "@graphql-codegen/typescript-react-apollo": "3.2.15",
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",

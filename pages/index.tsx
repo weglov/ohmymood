@@ -1,4 +1,4 @@
-import { Layout } from "@revolut/ui-kit";
+import { Layout, Relative } from "@revolut/ui-kit";
 import { createGlobalStyle } from "styled-components";
 import { Mood } from "../components/MoodForm";
 import { MoodFormProvider } from "../providers";
@@ -16,9 +16,11 @@ const IndexPage = () => {
     <Layout>
       <GlobalStyle />
       <Layout.Main>
-        <MoodFormProvider>
-          <Mood />
-        </MoodFormProvider>
+        <Relative minHeight="800px">
+          <MoodFormProvider>
+            <Mood />
+          </MoodFormProvider>
+        </Relative>
       </Layout.Main>
     </Layout>
   );

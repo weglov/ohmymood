@@ -6,31 +6,40 @@ import {
   useDateFormat,
   Widget,
   Subheader,
-  Button,
   TransitionSlide,
+  Button,
+  Box,
 } from "@revolut/ui-kit";
-import { useMyMarksQuery } from "../../api/generated/graphql";
+import { AxiosResponse } from "axios";
+
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { Mark } from "../../types";
+import { client } from "../../lib/api";
 
 import { useMoodForm, useTelegramInfo } from "../../providers";
 import { TotalChart } from "../Charts";
-
+import {History} from './History'
 import { RateInput } from "./RateInput";
 
 export const MoodForm = () => {
   const dateFormat = useDateFormat({ style: "precise" });
-  const { user } = useTelegramInfo();
-  const {
-    mood,
-    updateMood,
-    createMarkMutation,
-    loading: saveLoading,
-  } = useMoodForm();
+  const { tg } = useTelegramInfo();
+  const { mood, updateMood, saveMood } = useMoodForm();
 
-  const { data } = useMyMarksQuery({
-    variables: {
-      author: user!.id.toString(),
-    },
-  });
+  const {data} = useQuery<AxiosResponse<{marks:Mark[]}>>("my-marks", () => client.get('/api/marks'))
+  const marks = data?.data.marks  
+
+  useEffect(() => {
+    if (mood) {
+      tg.WebApp.MainButton.setText("Save");
+      tg.WebApp.MainButton.show();
+      tg.WebApp.MainButton.onClick(saveMood);
+      return;
+    }
+
+    tg.WebApp.MainButton.hide();
+  }, [mood, saveMood]);
 
   return (
     <Relative>
@@ -41,25 +50,22 @@ export const MoodForm = () => {
       <VStack space="s-24">
         <RateInput />
         <TransitionSlide in={Boolean(mood)}>
-            <TextArea
-              rows={3}
-              label="Your thoughts or feelings"
-              onChange={(e) => updateMood({ note: e.currentTarget.value })}
-            />
-            <Button
-              elevated
-              onClick={() => createMarkMutation()}
-              pending={saveLoading}
-            >
-              Save
-            </Button>
+          <TextArea
+            rows={3}
+            label="Your thoughts or feelings"
+            onChange={(e) => updateMood({ note: e.currentTarget.value })}
+          />
         </TransitionSlide>
-        <Widget p="s-8">
+        {process.env.NODE_ENV === 'development' && <Button onClick={saveMood}>Save</Button>}
+        <Widget>
+          <Box p='s-24'>
           <Subheader>
-            <Subheader.Title>Your monthly dynamic:</Subheader.Title>
+            <Subheader.Title>Your dynamic:</Subheader.Title>
           </Subheader>
-          {data?.marks && <TotalChart marks={data.marks} />}
+          </Box>
+          {marks && <TotalChart marks={marks} />}
         </Widget>
+          {marks && <History marks={marks}/>}
       </VStack>
     </Relative>
   );

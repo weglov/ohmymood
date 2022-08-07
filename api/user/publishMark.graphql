@@ -1,5 +1,0 @@
-mutation publishMark($id: ID!) {
-  publishMark(to: PUBLISHED, where: { id: $id }) {
-    id
-  }
-}
