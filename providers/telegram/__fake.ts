@@ -31,14 +31,23 @@ export const tgFake: any = {
     // "headerColor":"#ffffff",
     // "backgroundColor":null,
     // "BackButton":{"isVisible":false},
-    // "MainButton":{
-    //   "text":"CONTINUE",
-    //   "color":"#2481cc",
-    //   "textColor":"#ffffff",
-    //   "isVisible":false,
-    //   "isProgressVisible":false,
-    //   "isActive":true
-    // },
+    "MainButton":{
+      "text":"CONTINUE",
+      "color":"#2481cc",
+      "textColor":"#ffffff",
+      "isVisible":false,
+      "isProgressVisible":false,
+      "isActive":true,
+      "hide": () => {console.log('hide')},
+      "show": () => {console.log('show')},
+      "hideProgress": () => {console.log('hide')},
+      enable: () => console.log("enabled"),
+      disable: () => console.log("disable"),
+      onClick: () => console.log("onClick"),
+      "setText": () => {console.log('setText')}
+
+    },
+    onEvent: () => console.log('fff'),
     // "HapticFeedback":{}
   }
 }

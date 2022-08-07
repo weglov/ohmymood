@@ -1,6 +1,6 @@
-import { useDateFormat, ErrorWidget } from "@revolut/ui-kit";
+import { ErrorWidget } from "@revolut/ui-kit";
 
-import { useMoodForm, useTelegramInfo } from "../../providers";
+import { useTelegramInfo } from "../../providers";
 import { FormSkeleton } from "../FormSkeleton";
 import { MoodForm } from "./MoodForm";
 
@@ -18,7 +18,7 @@ export const Mood = () => {
         <ErrorWidget.Description>
           Check back later to keep up to date with the progress of your invites.
         </ErrorWidget.Description>
-        <ErrorWidget.Action onClick={() => console.log("Click")} />
+        <ErrorWidget.Action onClick={() => window.location.reload()} />
       </ErrorWidget>
     );
   }

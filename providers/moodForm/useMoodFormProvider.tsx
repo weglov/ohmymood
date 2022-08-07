@@ -43,9 +43,7 @@ export const useMoodFormProvider = () => {
             <Toast.Label>Saved! Have a great day.</Toast.Label>
           </Toast>,
           "short",
-          () => {
-            tg.WebApp?.close();
-          }
+          () => {}
         );
       },
     });
@@ -57,11 +55,19 @@ export const useMoodFormProvider = () => {
     [setFormData, formData]
   );
 
+  const saveMood = useCallback(async () => {
+    tg.WebApp.MainButton.showProgress(false);
+    const { data } = await createMarkMutation();
+    await publishMarkMutation({ variables: { id: data.createMark.id } });
+
+    tg.WebApp.MainButton.hideProgress();
+  }, [tg, createMarkMutation, publishMarkMutation]);
+
   return {
     ...formData,
     valid: formData.mood && isDirty,
     updateMood,
-    createMarkMutation,
+    saveMood,
     loading: createLoading || publishLoading,
   };
 };
