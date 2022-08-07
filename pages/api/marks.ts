@@ -2,6 +2,7 @@ import { gql } from "graphql-request";
 import { NextApiRequest, NextApiResponse } from "next";
 import { symbol } from "../../components/MoodForm/History";
 import { hygraphClient } from "../../lib/hygraph";
+import { updateLastMessage } from "../../lib/redis";
 import { sendTelegramPing } from "../../lib/telegram";
 import { getSession } from "../../lib/token";
 
@@ -55,6 +56,7 @@ export default async function handler(
     const {createMark} = await hygraphClient.request(CreateMark, {...request.body, author: userId});
     await hygraphClient.request(PublishMark, {id: createMark.id})
     response.status(200).json({ ...createMark })
-    sendTelegramPing({chat_id: chatId, text: `OK, I've captured your mood: ${symbol[createMark.mood]}. \n Have a great day.`})
+    sendTelegramPing({chat_id: chatId, text: `OK, mood check has been captured: ${symbol[createMark.mood]}. \n Have a great day.`})
+    updateLastMessage(chatId)
   }
 }
