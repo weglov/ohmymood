@@ -41,8 +41,6 @@ export const MoodForm = () => {
       <VStack space="s-24">
         <RateInput />
         <TransitionSlide in={Boolean(mood)}>
-          <>
-            {/* {mood && <Tags mood={mood} />} */}
             <TextArea
               rows={3}
               label="Your thoughts or feelings"
@@ -55,7 +53,6 @@ export const MoodForm = () => {
             >
               Save
             </Button>
-          </>
         </TransitionSlide>
         <Widget p="s-8">
           <Subheader>

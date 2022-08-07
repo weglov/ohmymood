@@ -1,15 +1,22 @@
-import { useDateFormat, ErrorWidget } from "@revolut/ui-kit";
+import { useDateFormat, ErrorWidget, Box } from "@revolut/ui-kit";
 
 import { useMoodForm, useTelegramInfo } from "../../providers";
 import { FormSkeleton } from "../FormSkeleton";
 import { MoodForm } from "./MoodForm";
 
+const env = process.env.NODE_ENV
+
 export const Mood = () => {
-  const { user, isInitialized } = useTelegramInfo();
+  const { tg, user, isInitialized } = useTelegramInfo();
 
   if (!isInitialized) {
     return <FormSkeleton />;
   }
+  
+  // if (env === 'development') {
+  //   return <Box>{JSON.stringify(tg)}</Box>
+  // }
+
   if (!user) {
     return (
       <ErrorWidget>
