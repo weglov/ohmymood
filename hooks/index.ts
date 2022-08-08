@@ -1,2 +1,2 @@
-export * from "./useInterval";
-export * from "./useMainButton";
+export * from './useInterval'
+export * from './useMainButton'

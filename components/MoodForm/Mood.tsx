@@ -1,16 +1,16 @@
-import { ErrorWidget } from "@revolut/ui-kit";
+import { ErrorWidget } from '@revolut/ui-kit'
 
-import { useTelegramInfo } from "../../providers";
-import { FormSkeleton } from "../FormSkeleton";
-import { MoodForm } from "./MoodForm";
+import { useTelegramInfo } from '../../providers'
+import { FormSkeleton } from '../FormSkeleton'
+import { MoodForm } from './MoodForm'
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV
 
 export const Mood = () => {
-  const { tg, user, isInitialized } = useTelegramInfo();
+  const { tg, user, isInitialized } = useTelegramInfo()
 
   if (!isInitialized) {
-    return <FormSkeleton />;
+    return <FormSkeleton />
   }
 
   if (!user) {
@@ -23,8 +23,8 @@ export const Mood = () => {
         </ErrorWidget.Description>
         <ErrorWidget.Action onClick={() => window.location.reload()} />
       </ErrorWidget>
-    );
+    )
   }
 
-  return <MoodForm />;
-};
+  return <MoodForm />
+}

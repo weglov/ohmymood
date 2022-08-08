@@ -6,23 +6,23 @@ import {
   Subheader,
   Box,
   VStack,
-} from "@revolut/ui-kit";
-import { Mark, Mood } from "../../types";
+} from '@revolut/ui-kit'
+import { Mark, Mood } from '../../types'
 
 type Props = {
-  marks: Mark[];
-};
+  marks: Mark[]
+}
 
 export const symbol = {
-  [Mood.Terrible]: "😡",
-  [Mood.Bad]: "☹",
-  [Mood.Ok]: "😐",
-  [Mood.Good]: "🙂",
-  [Mood.Great]: "😊",
-};
+  [Mood.Terrible]: '😡',
+  [Mood.Bad]: '☹',
+  [Mood.Ok]: '😐',
+  [Mood.Good]: '🙂',
+  [Mood.Great]: '😊',
+}
 
 export const History = ({ marks }: Props) => {
-  const dateFormat = useDateTimeFormat();
+  const dateFormat = useDateTimeFormat()
 
   return (
     <VStack>
@@ -48,5 +48,5 @@ export const History = ({ marks }: Props) => {
         ))}
       </Group>
     </VStack>
-  );
-};
+  )
+}

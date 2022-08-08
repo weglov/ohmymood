@@ -1,9 +1,4 @@
-import {
-  HeaderSkeleton,
-  Skeleton,
-  TextSkeleton,
-  VStack,
-} from "@revolut/ui-kit";
+import { HeaderSkeleton, Skeleton, TextSkeleton, VStack } from '@revolut/ui-kit'
 
 export const FormSkeleton = () => {
   return (
@@ -13,5 +8,5 @@ export const FormSkeleton = () => {
       <TextSkeleton variant="h2" size={8} />
       <Skeleton />
     </VStack>
-  );
-};
+  )
+}

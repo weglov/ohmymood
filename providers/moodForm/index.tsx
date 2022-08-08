@@ -1,18 +1,18 @@
-import { createContext, FC } from "react";
-import { useMoodFormProvider } from "./useMoodFormProvider";
+import { createContext, FC } from 'react'
+import { useMoodFormProvider } from './useMoodFormProvider'
 
-export * from "./useMoodForm";
+export * from './useMoodForm'
 
 export const MoodFormContext = createContext<
   ReturnType<typeof useMoodFormProvider> | undefined
->(undefined);
+>(undefined)
 
 export const MoodFormProvider: FC = ({ children }) => {
-  const value = useMoodFormProvider();
+  const value = useMoodFormProvider()
 
   return (
     <MoodFormContext.Provider value={value}>
       {children}
     </MoodFormContext.Provider>
-  );
-};
+  )
+}

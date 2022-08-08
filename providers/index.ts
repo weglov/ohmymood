@@ -1,2 +1,2 @@
-export * from "./telegram";
-export * from "./moodForm";
+export * from './telegram'
+export * from './moodForm'
