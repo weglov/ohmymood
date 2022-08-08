@@ -9,7 +9,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {

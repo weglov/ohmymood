@@ -4,7 +4,7 @@ import { useTelegramInfo } from "../../providers";
 import { FormSkeleton } from "../FormSkeleton";
 import { MoodForm } from "./MoodForm";
 
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV;
 
 export const Mood = () => {
   const { tg, user, isInitialized } = useTelegramInfo();
@@ -12,7 +12,6 @@ export const Mood = () => {
   if (!isInitialized) {
     return <FormSkeleton />;
   }
-  
 
   if (!user) {
     return (

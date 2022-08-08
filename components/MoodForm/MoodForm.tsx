@@ -9,6 +9,7 @@ import {
   TransitionSlide,
   Button,
   Box,
+  Skeleton,
 } from "@revolut/ui-kit";
 import { AxiosResponse } from "axios";
 
@@ -19,27 +20,31 @@ import { client } from "../../lib/api";
 
 import { useMoodForm, useTelegramInfo } from "../../providers";
 import { TotalChart } from "../Charts";
-import {History} from './History'
+import { History } from "./History";
 import { RateInput } from "./RateInput";
+import { useMainButton } from "../../hooks";
 
 export const MoodForm = () => {
   const dateFormat = useDateFormat({ style: "precise" });
-  const { tg } = useTelegramInfo();
+  const mainButton = useMainButton();
   const { mood, updateMood, saveMood } = useMoodForm();
 
-  const {data} = useQuery<AxiosResponse<{marks:Mark[]}>>("my-marks", () => client.get('/api/marks'))
-  const marks = data?.data.marks  
+  const { data, isLoading } = useQuery<AxiosResponse<{ marks: Mark[] }>>(
+    "my-marks",
+    () => client.get("/api/marks")
+  );
+  const marks = data?.data.marks;
 
   useEffect(() => {
     if (mood) {
-      tg.WebApp.MainButton.setText("Save");
-      tg.WebApp.MainButton.show();
-      tg.WebApp.MainButton.onClick(saveMood);
+      mainButton.setText("Save");
+      mainButton.show();
+      mainButton.onClick(saveMood);
       return;
     }
 
-    tg.WebApp.MainButton.hide();
-  }, [mood, saveMood]);
+    mainButton.hide();
+  }, [mainButton, mood, saveMood]);
 
   return (
     <Relative>
@@ -56,16 +61,22 @@ export const MoodForm = () => {
             onChange={(e) => updateMood({ note: e.currentTarget.value })}
           />
         </TransitionSlide>
-        {process.env.NODE_ENV === 'development' && <Button onClick={saveMood}>Save</Button>}
-        <Widget>
-          <Box p='s-24'>
-          <Subheader>
-            <Subheader.Title>Your dynamic:</Subheader.Title>
-          </Subheader>
-          </Box>
-          {marks && <TotalChart marks={marks} />}
-        </Widget>
-          {marks && <History marks={marks}/>}
+        {process.env.NODE_ENV === "development" && (
+          <Button onClick={saveMood}>Save</Button>
+        )}
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <VStack>
+              <Subheader>
+                <Subheader.Title>Your dynamic:</Subheader.Title>
+              </Subheader>
+              <Widget>{marks && <TotalChart marks={marks} />}</Widget>
+            </VStack>
+            {marks && <History marks={marks} />}
+          </>
+        )}
       </VStack>
     </Relative>
   );

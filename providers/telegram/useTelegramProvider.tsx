@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useInterval } from "../../hooks/useInterval";
@@ -14,19 +14,21 @@ export const useTelegramProvider = () => {
     undefined
   );
 
-  const { data, isFetched } = useQuery<AxiosResponse<{
-    status: "Authorized" | "Unauthorized";
-    user: WebAppUser;
-    token: string
-  }>>(
+  const { data, isFetched } = useQuery<
+    AxiosResponse<{
+      status: "Authorized" | "Unauthorized";
+      user: WebAppUser;
+      token: string;
+    }>
+  >(
     "init",
     () => client.post("/api/auth", { initData: telegramData?.WebApp.initData }),
     {
       enabled: init,
       retry: false,
-      onSuccess: ({data: {user, token}}) => {
+      onSuccess: ({ data: { user, token } }) => {
         setUser(user);
-        client.defaults.headers.common['x-token'] = token;
+        client.defaults.headers.common["x-token"] = token;
       },
     }
   );
