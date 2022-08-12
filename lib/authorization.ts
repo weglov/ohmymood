@@ -41,7 +41,7 @@ const PublishAuthor = gql`
   }
 `
 
-const GetAuthor = gql`
+export const GetAuthor = gql`
   query GetAuthor($tid: String!) {
     author(where: { tid: $tid }) {
       id

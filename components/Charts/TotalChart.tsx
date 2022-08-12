@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { PieChart } from '@revolut/ui-kit'
+import { PieChart, Subheader, Widget } from '@revolut/ui-kit'
 import { Mark, Mood } from '../../types'
 
 type Props = {
@@ -40,6 +40,15 @@ export const TotalChart = ({ marks }: Props) => {
   }, [marks])
 
   return (
-    <PieChart data={Object.values(data)} role="img" aria-label="Mood Dynamic" />
+    <Widget bg="yellow-opaque-30" px="s-16">
+      <Subheader>
+        <Subheader.Title>Top moods</Subheader.Title>
+      </Subheader>
+      <PieChart
+        data={Object.values(data)}
+        role="img"
+        aria-label="Mood Dynamic"
+      />
+    </Widget>
   )
 }

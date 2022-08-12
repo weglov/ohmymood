@@ -1214,24 +1214,24 @@
   resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
   integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
 
-"@revolut/icons@^1.48.0":
-  version "1.48.0"
-  resolved "https://registry.yarnpkg.com/@revolut/icons/-/icons-1.48.0.tgz#f13f56aa2e242543fa6c8407803a985bbe224520"
-  integrity sha512-2idUGY8KpQyWJIk0ndxhKwrihPJvY9ARigm+fOO4WGuP3Qi2Qn5o5TErS6J0tTWu0dXhcvpGZ4exmDEW17eo5A==
+"@revolut/icons@^1.51.0":
+  version "1.51.0"
+  resolved "https://registry.yarnpkg.com/@revolut/icons/-/icons-1.51.0.tgz#0b6022b2d766010b01625df4c06fa12c2b5d415e"
+  integrity sha512-zPCzrO82KpGNvI1QY6Cvux+uHSvppgZMZL351tzcnNmdfdV0ERLjJogmrH7VQOvrVqrcQIfxeY7YWDjldChosQ==
   dependencies:
     "@styled-system/core" "^5.1.2"
 
-"@revolut/ui-kit@^12.5.0":
-  version "12.5.0"
-  resolved "https://registry.yarnpkg.com/@revolut/ui-kit/-/ui-kit-12.5.0.tgz#570a72eaef3bb76674d282761df7fd4c00d8cd46"
-  integrity sha512-3EE5zxQWGCyxc6bhC0zzX8oOraYArqlfoXEvz+1bG4xQ444HQ+L50f/mTLLKoqwsCXUBg0Wemtrgxr/VEkOKWg==
+"@revolut/ui-kit@12.6.2":
+  version "12.6.2"
+  resolved "https://registry.yarnpkg.com/@revolut/ui-kit/-/ui-kit-12.6.2.tgz#2d0a1c6cdef767f3ab27f5b7d7e672beaba540eb"
+  integrity sha512-dAIAbDa5IB1EBFC9ewa1CUSn0eZh22K0V3YbhXi5gKKd5LQumHKGsDtjRg8LZiKMLTVfw9OD4olaWjrQraM5DA==
   dependencies:
     "@dnd-kit/core" "^3.1.1"
     "@dnd-kit/sortable" "^4.0.0"
     "@dnd-kit/utilities" "^2.0.0"
     "@emotion/is-prop-valid" "^0.7.3"
     "@popperjs/core" "^2.10.2"
-    "@revolut/icons" "^1.48.0"
+    "@revolut/icons" "^1.51.0"
     "@styled-system/core" "^5.1.2"
     "@styled-system/css" "^5.1.5"
     "@styled-system/theme-get" "^5.1.2"
@@ -1261,7 +1261,7 @@
     polished "^3.6.3"
     popper.js "1.15.0"
     react-day-picker "7.4.8"
-    react-table "^7.7.0"
+    react-table "^7.8.0"
     react-transition-group "^4.0.0"
     react-virtual "~2.8.2"
     rifm "^0.12.0"
@@ -3842,7 +3842,7 @@ react-router@5.3.3:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-table@^7.7.0:
+react-table@^7.8.0:
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.8.0.tgz#07858c01c1718c09f7f1aed7034fcfd7bda907d2"
   integrity sha512-hNaz4ygkZO4bESeFfnfOft73iBUj8K5oKi1EcSHPAibEydfsX2MyU6Z8KCr3mv3C9Kqqh71U+DhZkFvibbnPbA==

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { symbol } from '../../components/MoodForm/History'
+import { symbol } from '../../components/History'
 import { hygraphClient } from '../../lib/hygraph'
 import { updateLastMessage } from '../../lib/redis'
 import { sendTelegramPing } from '../../lib/telegram'
