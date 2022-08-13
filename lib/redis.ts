@@ -16,11 +16,14 @@ export const notifiyTelegramUsers = async () => {
       const lastMessageDate = await client.get(id)
 
       if (Date.now() - Number(lastMessageDate) > INTERVAL_NOTIFY) {
-        const { username } = await hygraphClient.request(GetAuthor, { tid: id })
+        const { author } = await hygraphClient.request(GetAuthor, { tid: id })
 
         await sendTelegramPing({
           chat_id: id,
-          text: shuffle(texts.ping_to_action)[0].replace('$1', `@${username}`),
+          text: shuffle(texts.ping_to_action)[0].replace(
+            '$1',
+            `@${author.username}`
+          ),
         })
         return await client.set(id, Date.now())
       }

@@ -1,15 +1,12 @@
 import {
   BarChart,
   Carousel,
-  chain,
   Group,
   LineChart,
   PieChart,
-  Status,
   Subheader,
   Tile,
 } from '@revolut/ui-kit'
-import * as Icons from '@revolut/icons'
 
 export const Analytics = () => (
   <Group>

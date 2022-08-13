@@ -14,7 +14,7 @@ import {
 } from '@revolut/ui-kit'
 import { AxiosResponse } from 'axios'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useQuery } from 'react-query'
 import { Mark } from '../../types'
 import { client } from '../../lib/api'
@@ -28,7 +28,7 @@ import { shuffle } from 'lodash'
 import { Analytics } from '../Analytics'
 
 export const MoodForm = () => {
-  const dateFormat = useDateFormat({ style: 'precise' })
+  const heySymbol = useRef(shuffle(['👋', '🖖', '🤙'])[0])
   const mainButton = useMainButton()
   const { user } = useTelegramInfo()
   const { mood, updateMood, loading, saveMood } = useMoodForm()
@@ -56,7 +56,7 @@ export const MoodForm = () => {
         <Header.Title>
           Hey,{' '}
           <Text color="pink">
-            {`@${user.username}`} {shuffle(['👋', '🖖', '🤙'])[0]}
+            {`@${user.username}`} {heySymbol.current}
           </Text>
         </Header.Title>
         <Header.Description>A great day to change your mood</Header.Description>
@@ -79,7 +79,7 @@ export const MoodForm = () => {
         </VStack>
       </Widget>
       {isLoading ? (
-        <Skeleton />
+        <Skeleton mt="s-24" />
       ) : (
         <VStack space="s-24" pt="s-24">
           <Analytics />
