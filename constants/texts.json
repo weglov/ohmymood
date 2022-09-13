@@ -1,9 +1,7 @@
 {
   "ping_to_action": [
-    "Hey $1, seems like a great time to fix your mood for now",
-    "👋 $1, a great day to change your mood",
-    "$1, how are you?",
-    "Hey $1, Don't Worry, Be Happy",
-    "Igor, please add new text"
+    "Don’t forget to record your day",
+    "It’s time to make a new record",
+    "<username>, how are you?"
   ]
 }

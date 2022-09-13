@@ -6,7 +6,7 @@ import { hygraphClient } from './hygraph'
 import { GetAuthor } from './authorization'
 
 const client = new Redis(process.env.REDIS_URL)
-let INTERVAL_NOTIFY = 18000 * 1000 // 5h
+let INTERVAL_NOTIFY = 3600 * 1000 // 1h
 
 export const notifiyTelegramUsers = async () => {
   const keys = await client.keys('*')
@@ -21,7 +21,7 @@ export const notifiyTelegramUsers = async () => {
         await sendTelegramPing({
           chat_id: id,
           text: shuffle(texts.ping_to_action)[0].replace(
-            '$1',
+            '<username>',
             `@${author.username}`
           ),
         })
