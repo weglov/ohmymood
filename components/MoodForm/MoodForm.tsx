@@ -12,13 +12,8 @@ import {
   Text,
   Group,
 } from '@revolut/ui-kit'
-import { AxiosResponse } from 'axios'
 
 import { useEffect, useRef } from 'react'
-import { useQuery } from 'react-query'
-import { Mark } from '../../types'
-import { client } from '../../lib/api'
-
 import { useMoodForm, useTelegramInfo } from '../../providers'
 import { TotalChart } from '../Charts'
 import { History } from '../History'
@@ -26,18 +21,14 @@ import { RateInput } from './RateInput'
 import { useMainButton } from '../../hooks'
 import { shuffle } from 'lodash'
 import { Analytics } from '../Analytics'
+import { useMarkData } from '../../hooks/useMarkData'
 
 export const MoodForm = () => {
   const heySymbol = useRef(shuffle(['👋', '🖖', '🤙'])[0])
   const mainButton = useMainButton()
   const { user } = useTelegramInfo()
   const { mood, updateMood, loading, saveMood } = useMoodForm()
-
-  const { data, isLoading } = useQuery<AxiosResponse<{ marks: Mark[] }>>(
-    'my-marks',
-    () => client.get('/api/marks')
-  )
-  const marks = data?.data.marks
+  const { marks, isLoading } = useMarkData()
 
   useEffect(() => {
     if (mood) {
