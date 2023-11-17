@@ -3,11 +3,9 @@ import {
   Carousel,
   Footnote,
   Group,
-  LineChart,
   Box,
   Skeleton,
   Subheader,
-  Tile,
 } from '@revolut/ui-kit'
 import { useMarkData } from '../../hooks/useMarkData'
 import { Insights } from './Insights'

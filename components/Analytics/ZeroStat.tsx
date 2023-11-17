@@ -1,24 +1,10 @@
-import {
-  BarChart,
-  Carousel,
-  Group,
-  LineChart,
-  PieChart,
-  Skeleton,
-  Subheader,
-  Tile,
-  Text,
-  RateEmoji,
-  VStack,
-} from '@revolut/ui-kit'
-import { countBy, maxBy } from 'lodash'
+import { BarChart, Tile } from '@revolut/ui-kit'
+import { countBy } from 'lodash'
 import { useMemo } from 'react'
 import { moodVariant, useMarkData } from '../../hooks/useMarkData'
-import { useMoodForm } from '../../providers'
-import { Mood } from '../../types'
 
 export const ZeroStat = () => {
-  const { marks, isLoading } = useMarkData()
+  const { marks } = useMarkData()
 
   const moods = useMemo(() => {
     const overAllMood = countBy(marks.slice(0, 10), (mark) => mark.mood)
@@ -34,8 +20,6 @@ export const ZeroStat = () => {
       })),
     [moods]
   )
-
-  console.log(data)
 
   return (
     <Tile variant="widget">

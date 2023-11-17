@@ -2,7 +2,7 @@ import { ErrorWidget } from '@revolut/ui-kit'
 
 import { useTelegramInfo } from '../../providers'
 import { FormSkeleton } from '../FormSkeleton'
-import { MoodForm } from './MoodForm'
+import { MoodFormContent } from './MoodFormContent'
 
 const env = process.env.NODE_ENV
 
@@ -26,5 +26,5 @@ export const Mood = () => {
     )
   }
 
-  return <MoodForm />
+  return <MoodFormContent />
 }

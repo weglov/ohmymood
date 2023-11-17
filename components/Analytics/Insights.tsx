@@ -1,20 +1,6 @@
-import {
-  BarChart,
-  Carousel,
-  Group,
-  LineChart,
-  PieChart,
-  Skeleton,
-  Subheader,
-  Tile,
-  Text,
-  RateEmoji,
-  VStack,
-} from '@revolut/ui-kit'
-import { countBy, maxBy } from 'lodash'
+import { LineChart, Tile } from '@revolut/ui-kit'
 import { useMemo } from 'react'
-import { moodVariant, useMarkData } from '../../hooks/useMarkData'
-import { useMoodForm } from '../../providers'
+import { useMarkData } from '../../hooks/useMarkData'
 import { Mood } from '../../types'
 
 export const Insights = () => {

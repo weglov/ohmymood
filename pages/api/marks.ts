@@ -29,6 +29,16 @@ const CreateMark = gql`
   }
 `
 
+const UpdateMark = gql`
+  mutation Mark($id: ID!, $mood: Mood!, $note: String) {
+    updateMark(data: { note: $note, mood: $mood }, where: { id: $id }) {
+      id
+      mood
+      note
+    }
+  }
+`
+
 const PublishMark = gql`
   mutation PublishMark($id: ID!) {
     publishMark(where: { id: $id }) {
@@ -49,6 +59,22 @@ export default async function handler(
     const { marks } = await hygraphClient.request(GetMarks, { id: userId })
     response.status(200).json({ marks })
     return
+  }
+
+  if (request.method === 'PATCH') {
+    const { updateMark } = await hygraphClient.request(UpdateMark, {
+      ...request.body,
+    })
+    console.log('updateMark', updateMark)
+    await hygraphClient.request(PublishMark, { id: updateMark.id })
+    response.status(200).json({ ...updateMark })
+    sendTelegramPing({
+      chat_id: chatId,
+      text: `OK, mood check has been captured: ${
+        symbol[updateMark.mood]
+      }. \n Have a great day.`,
+    })
+    updateLastMessage(chatId)
   }
 
   if (request.method === 'POST') {

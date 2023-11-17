@@ -1,5 +1,4 @@
 import { Box, RadioGroup, RateEmoji } from '@revolut/ui-kit'
-import { useMoodForm } from '../../providers'
 import { Mood } from '../../types'
 
 export const options = [
@@ -10,14 +9,18 @@ export const options = [
   { value: Mood.Great, label: Mood.Great, symbol: '😊' },
 ]
 
-export const RateInput = () => {
-  const { updateMood, mood } = useMoodForm()
-
+export const RateInput = ({
+  value,
+  updateValue,
+}: {
+  value: Mood
+  updateValue: (data: { mood: Mood }) => any
+}) => {
   return (
     <Box width="100%">
       <RadioGroup
-        value={mood}
-        onChange={(value: Mood) => updateMood({ mood: value })}
+        value={value}
+        onChange={(value: Mood) => updateValue({ mood: value })}
       >
         {(group) => (
           <RateEmoji variant="faded" checked={group.value !== null}>

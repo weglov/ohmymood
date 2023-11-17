@@ -1,38 +1,33 @@
 import {
-  Header,
-  Relative,
   TextArea,
   VStack,
-  useDateFormat,
   Widget,
-  Subheader,
   TransitionSlide,
   Button,
-  Skeleton,
-  Text,
-  Group,
 } from '@revolut/ui-kit'
 
-import { useEffect, useRef } from 'react'
-import { useMoodForm, useTelegramInfo } from '../../providers'
-import { TotalChart } from '../Charts'
-import { History } from '../History'
+import { useEffect } from 'react'
 import { RateInput } from './RateInput'
 import { useMainButton } from '../../hooks'
-import { shuffle } from 'lodash'
-import { Analytics } from '../Analytics'
-import { useMarkData } from '../../hooks/useMarkData'
+import { Mark } from '../../types'
+import { useMoodForm } from './useMoodForm'
 
-export const MoodForm = () => {
-  const heySymbol = useRef(shuffle(['👋', '🖖', '🤙'])[0])
+export const MoodForm = ({
+  initialData,
+  onSuccess,
+}: {
+  initialData?: Mark
+  onSuccess?: VoidFunction
+}) => {
   const mainButton = useMainButton()
-  const { user } = useTelegramInfo()
-  const { mood, updateMood, loading, saveMood } = useMoodForm()
-  const { marks, isLoading } = useMarkData()
+  const { mood, note, isEditable, updateMood, loading, saveMood } = useMoodForm(
+    initialData,
+    onSuccess
+  )
 
   useEffect(() => {
     if (mood) {
-      mainButton.setText('Save')
+      mainButton.setText(isEditable ? 'Change mark' : 'Save')
       mainButton.show()
       mainButton.onClick(saveMood)
       return
@@ -42,42 +37,25 @@ export const MoodForm = () => {
   }, [mainButton, mood, saveMood])
 
   return (
-    <Relative>
-      <Header variant="main">
-        <Header.Title>
-          Hey,{' '}
-          <Text color="pink">
-            {`@${user.username}`} {heySymbol.current}
-          </Text>
-        </Header.Title>
-        <Header.Description>A great day to change your mood</Header.Description>
-      </Header>
-      <Widget bg="light-blue-opaque-30" p="s-24">
-        <VStack space="s-24">
-          <RateInput />
-          <TransitionSlide in={Boolean(mood)}>
-            <TextArea
-              rows={3}
-              label="Your thoughts or feelings"
-              onChange={(e) => updateMood({ note: e.currentTarget.value })}
-            />
-          </TransitionSlide>
-          {process.env.NODE_ENV === 'development' && (
-            <Button onClick={saveMood} disabled={loading}>
-              Save
-            </Button>
-          )}
-        </VStack>
-      </Widget>
-      {isLoading ? (
-        <Skeleton mt="s-24" />
-      ) : (
-        <VStack space="s-24" pt="s-24">
-          <Analytics />
-          <TotalChart marks={marks} />
-          <History marks={marks} />
-        </VStack>
-      )}
-    </Relative>
+    <Widget bg="light-blue-opaque-30" p="s-24">
+      <VStack space="s-24">
+        <RateInput value={mood} updateValue={updateMood} />
+        <TransitionSlide in={Boolean(mood)}>
+          <TextArea
+            rows={3}
+            value={note}
+            autoFocus
+            label="Your thoughts or feelings"
+            onChange={(e) => updateMood({ note: e.currentTarget.value })}
+          />
+        </TransitionSlide>
+        {/* в дев режиме рисуем просто кнопку, потому что в телеграме рисуется нативная */}
+        {process.env.NODE_ENV === 'development' && (
+          <Button onClick={saveMood} disabled={loading}>
+            {isEditable ? 'Change mark' : 'Save'}
+          </Button>
+        )}
+      </VStack>
+    </Widget>
   )
 }

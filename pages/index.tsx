@@ -1,8 +1,6 @@
-import { BottomNav, Layout, Relative } from '@revolut/ui-kit'
-import * as Icons from '@revolut/icons'
+import { Layout, Relative } from '@revolut/ui-kit'
 import { createGlobalStyle } from 'styled-components'
-import { Mood, Navigation } from '../components'
-import { MoodFormProvider } from '../providers'
+import { Mood } from '../components'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -18,10 +16,7 @@ const IndexPage = () => {
       <GlobalStyle />
       <Layout.Main>
         <Relative minHeight="800px">
-          <MoodFormProvider>
-            <Mood />
-            {/* <Navigation /> */}
-          </MoodFormProvider>
+          <Mood />
         </Relative>
       </Layout.Main>
     </Layout>
