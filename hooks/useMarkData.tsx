@@ -27,7 +27,7 @@ export const useMarkData = () => {
     'my-marks',
     () => client.get('/api/marks'),
     {
-      staleTime: 2000,
+      staleTime: 1000,
     }
   )
   const marks = data?.data.marks.map((mark) => ({
