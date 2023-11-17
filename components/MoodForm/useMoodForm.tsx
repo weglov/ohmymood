@@ -39,6 +39,7 @@ export const useMoodForm = (initialData?: Mark, onSuccessFn?: VoidFunction) => {
         setDirty(false)
         setFormData({ mood: null, note: '' })
         mainButton.hideProgress()
+        mainButton.hide()
         onSuccessFn()
         toast.show(
           <Toast>

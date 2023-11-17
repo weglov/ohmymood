@@ -34,7 +34,7 @@ export const MoodForm = ({
     }
 
     mainButton.hide()
-  }, [mainButton, mood, saveMood])
+  }, [mainButton, mood, isEditable, saveMood])
 
   return (
     <Widget bg="light-blue-opaque-30" p="s-24">

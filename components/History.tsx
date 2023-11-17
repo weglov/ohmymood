@@ -14,6 +14,7 @@ import {
 } from '@revolut/ui-kit'
 import { TransitionSlideDown } from '@revolut/ui-kit/legacy'
 import { useState } from 'react'
+import { useMainButton } from '../hooks'
 import { useMarkData } from '../hooks/useMarkData'
 import { Mark, Mood } from '../types'
 import { MoodForm } from './MoodForm'
@@ -37,9 +38,14 @@ export const History = ({ marks }: Props) => {
   const {
     marks: { length: marksSize },
   } = useMarkData()
+  const mainButton = useMainButton()
   const [changableMark, setChangeMark] = useState<null | Mark>(null)
   const [offset, setOffset] = useState(OFFSET)
   const hasMore = offset < marksSize
+  const onClose = () => {
+    setChangeMark(null)
+    mainButton.hide()
+  }
 
   return (
     <Group>
@@ -81,10 +87,7 @@ export const History = ({ marks }: Props) => {
           Show more
         </Button>
       )}
-      <Modal
-        isOpen={Boolean(changableMark)}
-        onRequestClose={() => setChangeMark(null)}
-      >
+      <Modal isOpen={Boolean(changableMark)} onRequestClose={() => onClose()}>
         <Absolute bottom={0} width="100%">
           <Box
             bg="background"
@@ -93,15 +96,9 @@ export const History = ({ marks }: Props) => {
             elevation={600}
             p="s-24"
           >
-            <MoodForm
-              initialData={changableMark}
-              onSuccess={() => setChangeMark(null)}
-            />
+            <MoodForm initialData={changableMark} onSuccess={() => onClose()} />
           </Box>
-          <Modal.CloseButton
-            aria-label="Close"
-            onClick={() => setChangeMark(null)}
-          />
+          <Modal.CloseButton aria-label="Close" onClick={() => onClose()} />
         </Absolute>
       </Modal>
     </Group>
