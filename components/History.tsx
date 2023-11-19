@@ -15,8 +15,8 @@ import {
 import { TransitionSlideDown } from '@revolut/ui-kit/legacy'
 import { useState } from 'react'
 import { useMainButton } from '../hooks'
-import { useMarkData } from '../hooks/useMarkData'
 import { Mark, Mood } from '../types'
+import { useMoodData } from './context'
 import { MoodForm } from './MoodForm'
 
 type Props = {
@@ -37,7 +37,7 @@ export const History = ({ marks }: Props) => {
   const dateFormat = useDateTimeFormat()
   const {
     marks: { length: marksSize },
-  } = useMarkData()
+  } = useMoodData()
   const mainButton = useMainButton()
   const [changableMark, setChangeMark] = useState<null | Mark>(null)
   const [offset, setOffset] = useState(OFFSET)
@@ -87,12 +87,16 @@ export const History = ({ marks }: Props) => {
           Show more
         </Button>
       )}
-      <Modal isOpen={Boolean(changableMark)} onRequestClose={() => onClose()}>
+      <Modal
+        isOpen={Boolean(changableMark)}
+        scrollLock
+        onRequestClose={() => onClose()}
+      >
         <Absolute bottom={0} width="100%">
           <Box
             bg="background"
             width={'100%'}
-            radius="bottom-nav"
+            radius="card-top"
             elevation={600}
             p="s-24"
           >

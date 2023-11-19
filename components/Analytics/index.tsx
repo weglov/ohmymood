@@ -1,5 +1,4 @@
 import {
-  BarChart,
   Carousel,
   Footnote,
   Group,
@@ -7,13 +6,13 @@ import {
   Skeleton,
   Subheader,
 } from '@revolut/ui-kit'
-import { useMarkData } from '../../hooks/useMarkData'
+import { useMoodData } from '../context'
 import { Insights } from './Insights'
 import { Overall } from './Overall'
 import { ZeroStat } from './ZeroStat'
 
 export const Analytics = () => {
-  const { marks, isLoading } = useMarkData()
+  const { marks, isLoading } = useMoodData()
 
   if (isLoading) {
     return <Skeleton />

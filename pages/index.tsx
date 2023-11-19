@@ -1,6 +1,7 @@
 import { Layout, Relative } from '@revolut/ui-kit'
 import { createGlobalStyle } from 'styled-components'
 import { Mood } from '../components'
+import { MoodDataProvider } from '../components/context/moodData/context'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -15,8 +16,10 @@ const IndexPage = () => {
     <Layout>
       <GlobalStyle />
       <Layout.Main>
-        <Relative minHeight="800px">
-          <Mood />
+        <Relative>
+          <MoodDataProvider>
+            <Mood />
+          </MoodDataProvider>
         </Relative>
       </Layout.Main>
     </Layout>

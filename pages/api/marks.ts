@@ -53,7 +53,8 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  const { userId, chatId } = await getSession(request, response)
+  const result = await getSession(request, response)
+  const { userId, chatId } = result
 
   if (request.method === 'GET') {
     const { marks } = await hygraphClient.request(GetMarks, { id: userId })
@@ -65,16 +66,17 @@ export default async function handler(
     const { updateMark } = await hygraphClient.request(UpdateMark, {
       ...request.body,
     })
-    console.log('updateMark', updateMark)
+
     await hygraphClient.request(PublishMark, { id: updateMark.id })
     response.status(200).json({ ...updateMark })
     sendTelegramPing({
       chat_id: chatId,
-      text: `OK, mood check has been captured: ${
+      text: `OK, mood check has been updated: ${
         symbol[updateMark.mood]
       }. \n Have a great day.`,
     })
     updateLastMessage(chatId)
+    return
   }
 
   if (request.method === 'POST') {

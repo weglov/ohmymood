@@ -1,10 +1,9 @@
 import { LineChart, Tile } from '@revolut/ui-kit'
 import { useMemo } from 'react'
-import { useMarkData } from '../../hooks/useMarkData'
-import { Mood } from '../../types'
+import { useMoodData } from '../context'
 
 export const Insights = () => {
-  const { marks, isLoading } = useMarkData()
+  const { marks } = useMoodData()
 
   const moods = useMemo(() => {
     let prev = 0

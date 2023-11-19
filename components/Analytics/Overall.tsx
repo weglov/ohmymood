@@ -1,11 +1,11 @@
 import { Skeleton, Tile, Text, VStack } from '@revolut/ui-kit'
 import { countBy, maxBy } from 'lodash'
 import { useMemo } from 'react'
-import { moodVariant, useMarkData } from '../../hooks/useMarkData'
 import { Mood } from '../../types'
+import { useMoodData, moodVariant } from '../context'
 
 export const Overall = () => {
-  const { marks, isLoading } = useMarkData()
+  const { marks, isLoading } = useMoodData()
 
   const top = useMemo(() => {
     const overAllMood = countBy(marks.slice(0, 10), (mark) => mark.mood)

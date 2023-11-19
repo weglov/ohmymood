@@ -2,6 +2,11 @@
   "ping_to_action": [
     "Don’t forget to record your day",
     "It’s time to make a new record",
-    "<username>, how are you?"
+    "<username>, how are you?",
+    "<username>, How was your day? Share your feelings with you and keep track of your mood over time.",
+    "<username>, Don't forget to rate your day! It only takes a moment and helps you understand your emotions better.",
+    "Better days are ahead. Rate your day today and watch your progress over time.",
+    "<username>, your feelings matter! Make sure to record your daily mood and gain valuable insights.",
+    "Reflect on your day and rate your mood – let's build towards happier days together."
   ]
 }

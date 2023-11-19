@@ -14,7 +14,7 @@ export const getSession = (
       request.headers['x-token'] as string,
       process.env.BOT_TOKEN
     ) as Secret
-  } catch {
-    return response.status(403).json({}) as any
+  } catch (e) {
+    return response.status(403).json({ error: e }) as any
   }
 }

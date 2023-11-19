@@ -6,7 +6,7 @@ import {
   Button,
 } from '@revolut/ui-kit'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { RateInput } from './RateInput'
 import { useMainButton } from '../../hooks'
 import { Mark } from '../../types'
@@ -20,6 +20,7 @@ export const MoodForm = ({
   onSuccess?: VoidFunction
 }) => {
   const mainButton = useMainButton()
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mood, note, isEditable, updateMood, loading, saveMood } = useMoodForm(
     initialData,
     onSuccess
@@ -44,7 +45,7 @@ export const MoodForm = ({
           <TextArea
             rows={3}
             value={note}
-            autoFocus
+            ref={textareaRef}
             label="Your thoughts or feelings"
             onChange={(e) => updateMood({ note: e.currentTarget.value })}
           />

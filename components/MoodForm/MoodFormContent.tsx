@@ -21,19 +21,25 @@ import { RateInput } from './RateInput'
 import { useMainButton } from '../../hooks'
 import { shuffle } from 'lodash'
 import { Analytics } from '../Analytics'
-import { useMarkData } from '../../hooks/useMarkData'
 import { MoodForm } from './MoodForm'
+import { useMoodData } from '../context'
 
 export const MoodFormContent = () => {
-  const heySymbol = useRef(shuffle(['👋', '🖖', '🤙'])[0])
   const { user } = useTelegramInfo()
-  const { marks, isLoading } = useMarkData()
+  const heySymbol = useRef(
+    shuffle(
+      ['shumova', 'scheglov'].includes(user.username)
+        ? ['❤️', '🍐']
+        : ['👋', '🖖', '🤙']
+    )[0]
+  )
+  const { marks, isLoading } = useMoodData()
 
   return (
     <Relative>
       <Header variant="main">
         <Header.Title>
-          Hey,{' '}
+          Hey, {user.username === 'shumova' ? 'frau ' : ''}
           <Text color="pink">
             {`@${user.username}`} {heySymbol.current}
           </Text>

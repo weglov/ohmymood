@@ -1,10 +1,10 @@
 import { BarChart, Tile } from '@revolut/ui-kit'
 import { countBy } from 'lodash'
 import { useMemo } from 'react'
-import { moodVariant, useMarkData } from '../../hooks/useMarkData'
+import { useMoodData, moodVariant } from '../context'
 
 export const ZeroStat = () => {
-  const { marks } = useMarkData()
+  const { marks } = useMoodData()
 
   const moods = useMemo(() => {
     const overAllMood = countBy(marks.slice(0, 10), (mark) => mark.mood)
