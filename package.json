@@ -20,7 +20,6 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "next": "latest",
-    "next-pwa": "^5.5.4",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-query": "^3.39.1",
