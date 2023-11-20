@@ -54,6 +54,7 @@ export const tgFake: any = {
       enable: () => console.log('enabled'),
       disable: () => console.log('disable'),
       onClick: () => console.log('onClick'),
+      offClick: () => console.log('offClick'),
       setText: () => {
         console.log('setText')
       },

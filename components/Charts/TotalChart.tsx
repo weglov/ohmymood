@@ -1,10 +1,7 @@
 import { useMemo } from 'react'
 import { PieChart, Subheader, Widget } from '@revolut/ui-kit'
 import { Mark, Mood } from '../../types'
-
-type Props = {
-  marks: Mark[]
-}
+import { useMoodData } from '../context'
 
 const colorMatrix = {
   [Mood.Bad]: 'warning',
@@ -14,7 +11,8 @@ const colorMatrix = {
   [Mood.Great]: 'success',
 }
 
-export const TotalChart = ({ marks }: Props) => {
+export const TotalChart = () => {
+  const { marks } = useMoodData()
   const data = useMemo(() => {
     const counts = marks.reduce((acc, v) => {
       if (!acc[v.mood]) {

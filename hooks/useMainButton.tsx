@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useTelegramInfo } from '../providers'
 import { tgFake } from '../providers/telegram/__fake'
+import { MainButton } from '@twa-dev/types'
+
+let mainButtonEvent = null
 
 export const useMainButton = () => {
-  const { isInitialized } = useTelegramInfo()
+  const { isInitialized, mainButtonEvent } = useTelegramInfo()
   const ref = useRef<MainButton>(
     tgFake.WebApp.MainButton as unknown as MainButton
   )
@@ -12,5 +15,26 @@ export const useMainButton = () => {
     ref.current = window?.Telegram?.WebApp?.MainButton
   }, [isInitialized])
 
-  return ref.current
+  const mainButton = ref.current
+
+  const reset = () => {
+    if (mainButtonEvent.current) {
+      mainButton.offClick(mainButtonEvent.current)
+      mainButtonEvent.current = null
+    }
+  }
+
+  const addMainButton = useCallback((event: VoidFunction, text: string) => {
+    reset()
+
+    mainButton.setText(text)
+    mainButton.show()
+    mainButton.onClick(event)
+  }, [])
+
+  const hideMainButton = useCallback(() => {
+    mainButton.hide()
+  }, [])
+
+  return { addMainButton, hideMainButton, ...ref.current }
 }

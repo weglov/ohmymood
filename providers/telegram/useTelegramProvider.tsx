@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios'
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
+import { WebAppUser, Telegram } from '@twa-dev/types'
+import { get } from '@vercel/edge-config'
 import { useInterval } from '../../hooks/useInterval'
 import { client } from '../../lib/api'
 import { tgFake } from './__fake'
@@ -8,6 +10,7 @@ import { tgFake } from './__fake'
 const isDev = process.env.NODE_ENV === 'development'
 
 export const useTelegramProvider = () => {
+  const mainButtonEvent = useRef(null)
   const [init, setInit] = useState(false)
   const [user, setUser] = useState<WebAppUser | undefined>(undefined)
   const [telegramData, setTelegramData] = useState<Telegram | undefined>(
@@ -26,7 +29,7 @@ export const useTelegramProvider = () => {
     {
       enabled: init,
       retry: false,
-      onSuccess: ({ data: { user, token } }) => {
+      onSuccess: async ({ data: { user, token } }) => {
         setUser(user)
         client.defaults.headers.common['x-token'] = token
       },
@@ -48,6 +51,7 @@ export const useTelegramProvider = () => {
     isInitialized: isFetched && init,
     tg: telegramData,
     user,
+    mainButtonEvent,
     status: data?.status,
   }
 }

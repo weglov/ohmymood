@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 import { hygraphClient } from './hygraph'
 import { createJWT } from './token'
+import { WebAppUser } from '@twa-dev/types'
 
 const CreateAuthor = gql`
   mutation CreateAuthor(

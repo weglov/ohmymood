@@ -9,7 +9,8 @@
   "dependencies": {
     "@apollo/client": "^3.6.6",
     "@revolut/ui-kit": "12.6.2",
-    "@types/telegram-web-app": "^1.0.0",
+    "@twa-dev/types": "^6.9.0",
+    "@vercel/edge-config": "^0.4.1",
     "awesome-graphql-client": "^0.12.1",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",

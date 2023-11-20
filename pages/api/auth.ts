@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { WebAppUser } from '@twa-dev/types'
 import { createHmac } from 'crypto'
 import {
   createDataCheckStringFromUserData,

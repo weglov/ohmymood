@@ -33,11 +33,10 @@ export const symbol = {
 
 const OFFSET = 5
 
-export const History = ({ marks }: Props) => {
+export const History = () => {
   const dateFormat = useDateTimeFormat()
-  const {
-    marks: { length: marksSize },
-  } = useMoodData()
+  const { marks } = useMoodData()
+  const marksSize = marks.length
   const mainButton = useMainButton()
   const [changableMark, setChangeMark] = useState<null | Mark>(null)
   const [offset, setOffset] = useState(OFFSET)

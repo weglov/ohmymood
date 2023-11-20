@@ -52,8 +52,8 @@ export const MoodFormContent = () => {
       ) : (
         <VStack space="s-24" pt="s-24">
           <Analytics />
-          <TotalChart marks={marks} />
-          <History marks={marks} />
+          <TotalChart />
+          <History />
         </VStack>
       )}
     </Relative>

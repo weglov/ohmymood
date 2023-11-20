@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
 const IndexPage = () => {
   return (
     <Layout>
+      {/* @ts-ignore */}
       <GlobalStyle />
       <Layout.Main>
         <Relative>

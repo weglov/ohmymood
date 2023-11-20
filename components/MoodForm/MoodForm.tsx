@@ -11,6 +11,7 @@ import { RateInput } from './RateInput'
 import { useMainButton } from '../../hooks'
 import { Mark } from '../../types'
 import { useMoodForm } from './useMoodForm'
+import { useTelegramInfo } from '../../providers'
 
 export const MoodForm = ({
   initialData,
@@ -19,7 +20,7 @@ export const MoodForm = ({
   initialData?: Mark
   onSuccess?: VoidFunction
 }) => {
-  const mainButton = useMainButton()
+  const { addMainButton, hideMainButton } = useMainButton()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mood, note, isEditable, updateMood, loading, saveMood } = useMoodForm(
     initialData,
@@ -28,14 +29,14 @@ export const MoodForm = ({
 
   useEffect(() => {
     if (mood) {
-      mainButton.setText(isEditable ? 'Change mark' : 'Save')
-      mainButton.show()
-      mainButton.onClick(saveMood)
+      addMainButton(saveMood, isEditable ? 'Change mark' : 'Save')
       return
     }
 
-    mainButton.hide()
-  }, [mainButton, mood, isEditable, saveMood])
+    hideMainButton()
+
+    return hideMainButton
+  }, [addMainButton, hideMainButton, mood, isEditable, saveMood])
 
   return (
     <Widget bg="light-blue-opaque-30" p="s-24">

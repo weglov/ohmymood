@@ -5,6 +5,7 @@ import { client } from '../../lib/api'
 import { useMutation } from 'react-query'
 import { useMainButton } from '../../hooks'
 import { useMoodData } from '../context'
+import { useTelegramInfo } from '../../providers'
 
 type FormData = {
   mood?: Mood
@@ -13,6 +14,7 @@ type FormData = {
 
 export const useMoodForm = (initialData?: Mark, onSuccessFn?: VoidFunction) => {
   const mainButton = useMainButton()
+  const { tg } = useTelegramInfo()
   const { refetch } = useMoodData()
   const [isDirty, setDirty] = useState(true)
   const [formData, setFormData] = useState<FormData>({
@@ -35,6 +37,8 @@ export const useMoodForm = (initialData?: Mark, onSuccessFn?: VoidFunction) => {
         : client.post('/api/marks', formData),
     {
       onSuccess: () => {
+        tg.WebApp.HapticFeedback?.notificationOccurred('success')
+
         setDirty(false)
         setFormData({ mood: null, note: '' })
         mainButton.hideProgress()
