@@ -30,10 +30,12 @@ export const useMainButton = () => {
     mainButton.setText(text)
     mainButton.show()
     mainButton.onClick(event)
+    mainButtonEvent.current = event
   }, [])
 
   const hideMainButton = useCallback(() => {
     mainButton.hide()
+    reset()
   }, [])
 
   return { addMainButton, hideMainButton, ...ref.current }
