@@ -3,8 +3,6 @@ import { useTelegramInfo } from '../providers'
 import { tgFake } from '../providers/telegram/__fake'
 import { MainButton } from '@twa-dev/types'
 
-let mainButtonEvent = null
-
 export const useMainButton = () => {
   const { isInitialized, mainButtonEvent } = useTelegramInfo()
   const ref = useRef<MainButton>(
@@ -24,14 +22,17 @@ export const useMainButton = () => {
     }
   }
 
-  const addMainButton = useCallback((event: VoidFunction, text: string) => {
-    reset()
+  const addMainButton = useCallback(
+    (event: VoidFunction, text: string) => {
+      reset()
 
-    mainButton.setText(text)
-    mainButton.show()
-    mainButton.onClick(event)
-    mainButtonEvent.current = event
-  }, [])
+      mainButton.setText(text)
+      mainButton.show()
+      mainButton.onClick(event)
+      mainButtonEvent.current = event
+    },
+    [mainButtonEvent]
+  )
 
   const hideMainButton = useCallback(() => {
     mainButton.hide()

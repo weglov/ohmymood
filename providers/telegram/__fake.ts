@@ -1,3 +1,7 @@
+import EventEmitter from 'events'
+
+const ee = new EventEmitter()
+
 export const tgFake: any = {
   WebApp: {
     initData:
@@ -53,10 +57,18 @@ export const tgFake: any = {
       },
       enable: () => console.log('enabled'),
       disable: () => console.log('disable'),
-      onClick: () => console.log('onClick'),
-      offClick: () => console.log('offClick'),
-      setText: () => {
-        console.log('setText')
+      onClick: (event: VoidFunction) => {
+        console.log('onClick')
+
+        ee.addListener('onClick', event)
+      },
+      offClick: (event: VoidFunction) => {
+        console.log('offClick')
+        ee.removeListener('onClick', event)
+        console.log(ee)
+      },
+      setText: (text) => {
+        console.log('setText', text)
       },
     },
     onEvent: () => console.log('fff'),

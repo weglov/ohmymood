@@ -11,7 +11,6 @@ import { RateInput } from './RateInput'
 import { useMainButton } from '../../hooks'
 import { Mark } from '../../types'
 import { useMoodForm } from './useMoodForm'
-import { useTelegramInfo } from '../../providers'
 
 export const MoodForm = ({
   initialData,
