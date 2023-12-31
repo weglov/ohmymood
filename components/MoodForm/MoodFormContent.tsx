@@ -27,11 +27,7 @@ import { useMoodData } from '../context'
 export const MoodFormContent = () => {
   const { user } = useTelegramInfo()
   const heySymbol = useRef(
-    shuffle(
-      ['shumova', 'scheglov'].includes(user.username)
-        ? ['❤️', '🍐']
-        : ['👋', '🖖', '🤙']
-    )[0]
+    shuffle(['👋', '🖖', '🤙'])[0]
   )
   const { marks, isLoading } = useMoodData()
 
@@ -39,7 +35,7 @@ export const MoodFormContent = () => {
     <Relative>
       <Header variant="main">
         <Header.Title>
-          Hey, {user.username === 'shumova' ? 'frau ' : ''}
+          Hey,
           <Text color="pink">
             {`@${user.username}`} {heySymbol.current}
           </Text>
