@@ -3,10 +3,13 @@ import { useTelegramInfo } from '../providers'
 import { tgFake } from '../providers/telegram/__fake'
 import { MainButton } from '@twa-dev/types'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 export const useMainButton = () => {
   const { isInitialized, mainButtonEvent } = useTelegramInfo()
+  console.log()
   const ref = useRef<MainButton>(
-    tgFake.WebApp.MainButton as unknown as MainButton
+    isDev ? tgFake.WebApp.MainButton : window?.Telegram?.WebApp?.MainButton
   )
 
   useEffect(() => {

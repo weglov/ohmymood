@@ -34,7 +34,7 @@ export const MoodForm = ({
 
     hideMainButton()
 
-    return hideMainButton
+    // return () => hideMainButton()
   }, [addMainButton, hideMainButton, mood, isEditable, saveMood])
 
   return (
