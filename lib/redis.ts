@@ -24,6 +24,8 @@ export const notifiyTelegramUsers = async () => {
             '<username>',
             `@${author.username}`
           ),
+        }).catch((reason) => {
+          console.error(reason)
         })
         return await client.set(id, Date.now())
       }
